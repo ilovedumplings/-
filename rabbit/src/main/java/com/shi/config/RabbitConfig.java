@@ -15,9 +15,12 @@ import org.springframework.context.annotation.Scope;
 
 
 /**
- * 要先定义工厂bean,然后获取rabbitTemplate,再定义exchange
+ * 
  * @ClassName RabbitConfig
- * @Description TODO(这里用一句话描述这个类的作用)
+ * @Description 要先定义工厂bean,然后获取rabbitTemplate,再定义exchange
+ * RabbitTemplate 相当于定义一个channel,绑定交换机和队列,但是单单绑定交换机和队列
+ * 是不行的,还要声明交换机和队列,最后将交换机和队列还有rounting key绑定到一起,形成
+ * 一个完成的消息链路
  * @author Shi
  * @Date 2019年3月15日 上午11:04:13
  * @version 1.0.0
@@ -34,7 +37,6 @@ public class RabbitConfig {
 	@Value("${spring.rabbitmq.password}")
 	private String password;
 	
-	
 	@Bean
 	public ConnectionFactory connectionFactory(){
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -45,19 +47,8 @@ public class RabbitConfig {
 		connectionFactory.setVirtualHost("aic45dev");
 		//这个设置是为了确认消息发到了队列上去
 		connectionFactory.setPublisherConfirms(true);
-		
 		return connectionFactory;
 	}
-	
-	/**
-	 * 
-	 * @Description (说是自动创建队列用的,暂时先注释掉看一下,注释掉发现也没啥...)
-	 * @return
-	 */
-	/*@Bean
-	public RabbitAdmin rabbitadmin(){
-		return new RabbitAdmin(connectionFactory());
-	}*/
 	
 	/**
 	 * 
@@ -82,7 +73,6 @@ public class RabbitConfig {
 	public TopicExchange topicExchange(){
 		return new TopicExchange("shi.test.exchange1");
 	}
-	
 	/**
 	 * 
 	 * @Description (注册一个队列,队列名为shi.queueA)
@@ -93,7 +83,6 @@ public class RabbitConfig {
 		Queue queue = new Queue("shi.queueA", false);
 		return queue;
 	}
-	
 	/**
 	 * 
 	 * @Description (将队列,交换机和routing key绑定在一起)
@@ -104,4 +93,14 @@ public class RabbitConfig {
 		return BindingBuilder.bind(queueA()).to(topicExchange()).with("bmp.param");
 	}	
 	
+	
+	/**
+	 * 
+	 * @Description (说是自动创建队列用的,暂时先注释掉看一下,注释掉发现也没啥...)
+	 * @return
+	 */
+	/*@Bean
+	public RabbitAdmin rabbitadmin(){
+		return new RabbitAdmin(connectionFactory());
+	}*/
 }
