@@ -7,7 +7,20 @@ import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-
+/**
+ * 
+ * @ClassName EmitLog 
+ * @Description TODO[日志生产者,该类是用来简单的实现一个RabbitMQ的消息发送功能,对应的消息接收类为ReceiveLogs]
+ * 当exchange的类型为FANOUT的时候:
+ *   消息通过channel发送到exchange后,就会发送到所有与exchange绑定的队列上去
+ * 当exchange的类型为Direct的时候:
+ *   消息通过channel时发送时,会绑定一个rounting key,当消息发送到exchange后,
+ * exchange就会发送消息到与其绑定的队列并且队列的rounting key和消息的rounting key
+ * 是一致的队列上去
+ * @author Shi
+ * @Date 2019年4月21日 下午2:30:10
+ * @version 1.0.0
+ */
 public class EmitLog {
 
 //	private static final String EXCHANG_NAME="logs";

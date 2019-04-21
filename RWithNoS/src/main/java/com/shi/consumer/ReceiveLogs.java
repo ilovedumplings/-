@@ -9,6 +9,15 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
+/**
+ * 
+ * @ClassName ReceiveLogs
+ * @Description [日志接受者 该类主要实现了一个RabbitMQ的消息接受功能,对应的消息发送类为EmitLog]
+ * 详情描述见EmitLog
+ * @author Shi
+ * @Date 2019年4月21日 下午2:42:56
+ * @version 1.0.0
+ */
 public class ReceiveLogs {
 
 //	private static final String EXCHANG_NAME="logs";

@@ -9,6 +9,14 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 import com.shi.Contasnts;
 
+/**
+ * 
+ * @ClassName Recv
+ * @Description 这个就是最简单的消息确认类
+ * @author Shi
+ * @Date 2019年4月21日 下午3:03:30
+ * @version 1.0.0
+ */
 public class Recv {
 
 	public static void main(String[] args) throws IOException, TimeoutException {
@@ -29,7 +37,7 @@ public class Recv {
 			System.out.println(" [x] received '"+message+"'");
 		};
 		
-		channel.basicConsume(Contasnts.QUEUENAME, false, deliverCallback, consumerTag->{});
+		channel.basicConsume(Contasnts.QUEUENAME, true, deliverCallback, consumerTag->{});
 		
 	}
 }

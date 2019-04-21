@@ -11,6 +11,14 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.RpcClient;
 import com.shi.Contasnts;
 
+/**
+ * 
+ * @ClassName Send
+ * @Description 这个类就是最简单的RabbitMQ的消息发送类
+ * @author Shi
+ * @Date 2019年4月21日 下午3:03:08
+ * @version 1.0.0
+ */
 public class Send {
 
 	
