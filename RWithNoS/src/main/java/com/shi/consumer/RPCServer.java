@@ -20,19 +20,17 @@ public class RPCServer {
 		Connection connection = connectionFactory.newConnection();
 		Channel channel = connection.createChannel();
 		channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null);
-		channel.queuePurge(RPC_QUEUE_NAME);
+//		channel.queuePurge(RPC_QUEUE_NAME);
 		channel.basicQos(1);
 
-		
 		System.out.println(" [x] Awaiting RPC requests");
 		channel.basicConsume(RPC_QUEUE_NAME, (consumer,deliver)->{
 			//???这个方法是不是相当于rabbitMq的一个监听???
-			System.out.println("start new thread");
+			System.out.println("开启新线程,监听队列");
 			AMQP.BasicProperties basicProperties = new AMQP.BasicProperties().builder()
 					.correlationId(deliver.getProperties().getCorrelationId()).build();
 			String message = new String(deliver.getBody(),"UTF-8");
 			System.out.println(" [*] receive message :'"+message+"' ");
-			
 			channel.basicPublish("", deliver.getProperties().getReplyTo(), basicProperties, "I am IRON MAN".getBytes());
 			channel.basicAck(deliver.getEnvelope().getDeliveryTag(), false);
 		}, consumerTag->{});
